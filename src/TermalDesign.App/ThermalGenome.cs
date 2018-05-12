@@ -31,8 +31,6 @@ namespace TermalDesign.App
 
             var result = RandomizationProvider.Current.GetInt(bound.Min, bound.Max + 1);
 
-            Console.WriteLine($"Creating gene index {geneIndex} -> ${result}");
-
             return new Gene(result);
         }
 
