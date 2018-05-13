@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThermalDesign.Tests", "src\ThermalDesign.Tests\ThermalDesign.Tests.csproj", "{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,12 +35,25 @@ Global
 		{F2F8EB6A-DFAD-4D0F-9AF2-736580D0B80E}.Release|x64.Build.0 = Release|Any CPU
 		{F2F8EB6A-DFAD-4D0F-9AF2-736580D0B80E}.Release|x86.ActiveCfg = Release|Any CPU
 		{F2F8EB6A-DFAD-4D0F-9AF2-736580D0B80E}.Release|x86.Build.0 = Release|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Debug|x64.Build.0 = Debug|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Debug|x86.Build.0 = Debug|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Release|x64.ActiveCfg = Release|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Release|x64.Build.0 = Release|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Release|x86.ActiveCfg = Release|Any CPU
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F2F8EB6A-DFAD-4D0F-9AF2-736580D0B80E} = {64C2EE06-89C9-44A2-8BB5-55587F43FE2F}
+		{8EFF865E-D094-4A3E-A949-0B66A15A0DB8} = {64C2EE06-89C9-44A2-8BB5-55587F43FE2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E019834C-D600-4E39-8D4E-DC307D5F5948}
