@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GeneticSharp.Domain;
 using GeneticSharp.Domain.Crossovers;
 using GeneticSharp.Domain.Mutations;
@@ -25,7 +26,10 @@ namespace TermalDesign.App
             Console.WriteLine("GA running...");
             ga.Start();
 
-            Console.WriteLine("Best solution found has {0} fitness.", ga.BestChromosome.Fitness);
+            var gaBestChromosome = ga.BestChromosome as ThermalGenome;
+            Console.WriteLine("Best solution found has {0} fitness.", gaBestChromosome.Fitness);
+            Console.WriteLine("Values:");
+            Console.WriteLine(string.Join(",", gaBestChromosome.Select(t => t.U.ToString())));
         }
     }
 }
