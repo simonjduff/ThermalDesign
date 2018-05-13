@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Fitnesses;
 
@@ -20,8 +19,8 @@ namespace TermalDesign.App
                 }
             }
 
-            var genes = Enumerable.Range(0, chromosome.Length).Select(chromosome.GetGene);
-            return genes.Sum(g => (int)g.Value);
+            var genes = genome.Select(g => g.U);
+            return genes.Sum(g => g);
         }
     }
 }
