@@ -8,8 +8,8 @@ namespace TermalDesign.App
 {
     public class ThermalGenome : ChromosomeBase, IEnumerable<(int U, (int Min, int Max) Bounds)>
     {
-        private const int NumberOfNodes = 7;
-        private readonly (int Min, int Max)[] _bounds = {(1, 10), (1, 10), (1, 10), (1, 10), (1, 10), (1, 10), (1, 2)};
+        private const int NumberOfNodes = 6;
+        private readonly (int Min, int Max)[] _bounds = {(1, 50), (1, 50), (1, 50), (3, 10), (1, 50), (3, 10)};
 
         public ThermalGenome() : base(NumberOfNodes)
         {
