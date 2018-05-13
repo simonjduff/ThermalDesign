@@ -9,7 +9,7 @@ namespace TermalDesign.App
     public class ThermalGenome : ChromosomeBase, IEnumerable<(int U, (int Min, int Max) Bounds)>
     {
         private const int NumberOfNodes = 6;
-        private readonly (int Min, int Max)[] _bounds = {(1, 50), (1, 50), (1, 50), (3, 10), (1, 50), (3, 10)};
+        public readonly (int Min, int Max)[] Bounds = {(1, 50), (1, 50), (1, 50), (3, 10), (1, 50), (3, 10)};
 
         public ThermalGenome() : base(NumberOfNodes)
         {
@@ -18,9 +18,9 @@ namespace TermalDesign.App
 
         public override Gene GenerateGene(int geneIndex)
         {
-            if (NumberOfNodes != _bounds.Length)
+            if (NumberOfNodes != Bounds.Length)
             {
-                throw new Exception($"Number of nodes {NumberOfNodes} does not match number of Bounds {_bounds.Length}");
+                throw new Exception($"Number of nodes {NumberOfNodes} does not match number of Bounds {Bounds.Length}");
             }
 
             if (geneIndex < 0 || geneIndex > NumberOfNodes - 1)
@@ -28,7 +28,7 @@ namespace TermalDesign.App
                 throw new Exception($"geneIndex outside of bounds of chromosome. Expected 0-{NumberOfNodes-1} but was {geneIndex}");
             }
 
-            var bound = _bounds[geneIndex];
+            var bound = Bounds[geneIndex];
 
             var result = RandomizationProvider.Current.GetInt(bound.Min, bound.Max + 1);
             return new Gene(result);
@@ -43,7 +43,7 @@ namespace TermalDesign.App
         {
             for (int i = 0; i < NumberOfNodes; i++)
             {
-                var bound = _bounds[i];
+                var bound = Bounds[i];
                 yield return ((int)GetGene(i).Value, bound);
             }
         }

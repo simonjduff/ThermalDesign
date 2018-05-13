@@ -31,10 +31,20 @@ namespace TermalDesign.App
             _area = area;
         }
 
-        public double OutputTemperature =>
-            (CalculateInputTemperature() - AmbientTemperature)
-            * Math.Exp((-1 * _area * _u) / (MassPerSecond() * SpecificHeatCapacity))
-            + AmbientTemperature;
+        public double OutputTemperature
+        {
+            get
+            {
+                if (Q == 0)
+                {
+                    return AmbientTemperature;
+                }
+
+                return (CalculateInputTemperature() - AmbientTemperature)
+                       * Math.Exp((-1 * _area * _u) / (MassPerSecond() * SpecificHeatCapacity))
+                       + AmbientTemperature;
+            }
+        }
 
         public double InputTemperature => CalculateInputTemperature();
 
