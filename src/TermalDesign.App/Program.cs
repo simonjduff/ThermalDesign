@@ -31,7 +31,7 @@ namespace TermalDesign.App
 
                 for (int i = 0; i < cases.Length; i++)
                 {
-                    Console.WriteLine($"Case {i + 1} - GOut {cases[i].Segments['g'].OutputTemperature:0.0} DIn {cases[i].Segments['d'].InputTemperature:0.0}");
+                    Console.WriteLine($"Case {i + 1} - GOut {cases[i].Segments['g'].OutputTemperature:0} DIn {cases[i].Segments['d'].InputTemperature:0}");
                 }
 
                 return;
