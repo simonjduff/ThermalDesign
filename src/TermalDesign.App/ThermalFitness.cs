@@ -24,25 +24,25 @@ namespace TermalDesign.App
             var cases = new[]
             {
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    (0, 0), (0, 0), (121, 450)),
+                    false, (0, 0), (0, 0), (121, 450)), // 1
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    (0, 0), (125, 350), (125, 110)),
+                    false, (0, 0), (125, 350), (125, 110)), // 2
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    (0, 0), (135, 190), (135, 110)),
+                    false, (0, 0), (135, 190), (135, 110)), // 3
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    (155, 400), (0, 0), (0, 0)),
+                    false, (155, 400), (0, 0), (0, 0)), // 4a
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    (0, 0), (132, 109), (132, 91)),
+                    false, (0, 0), (132, 109), (132, 91)), // 4b
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    (155, 150), (0, 0), (0, 0)),
+                    true, (155, 150), (0, 0), (0, 0)),// 5a
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    (0, 0), (132, 160), (136, 140)),
+                    false, (0, 0), (132, 160), (136, 140)), // 5b
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    (150, 130), (0, 0), (130, 78)),
+                    true, (150, 130), (0, 0), (130, 78)), // 6a
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    (0, 0), (127, 109), (130, 45)),
+                    false, (0, 0), (127, 109), (130, 45)), // 6b
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    (0, 0), (131, 150), (138, 50))
+                    false, (0, 0), (131, 150), (138, 50)) // 7
             };
 
             var failure = cases.Sum(c => c.Failure());

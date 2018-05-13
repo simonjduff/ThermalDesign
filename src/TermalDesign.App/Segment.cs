@@ -9,32 +9,31 @@ namespace TermalDesign.App
         private readonly IEnumerable<(double T, int Q)> _inputs;
         private readonly double _u;
         private readonly double _area;
+        private readonly bool _bypass;
         private const double AmbientTemperature = 17.5;
         public const double Density = 0.277;
         public const double SpecificHeatCapacity = 2400;
 
-        public Segment(IEnumerable<(double T, int Q)> inputs,
-            double u,
-            double area)
+        public Segment(double u,
+            double area,
+            bool bypass = false,
+            params (double T, int Q)[] inputs)
         {
             _inputs = inputs;
             _u = u;
             _area = area;
-        }
-
-        public Segment((double T, int Q) inputs, 
-            double u, 
-            double area)
-        {
-            _inputs = new []{ inputs};
-            _u = u;
-            _area = area;
+            _bypass = bypass;
         }
 
         public double OutputTemperature
         {
             get
             {
+                if (_bypass)
+                {
+                    return CalculateInputTemperature();
+                }
+
                 if (Q == 0)
                 {
                     return AmbientTemperature;

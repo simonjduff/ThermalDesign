@@ -7,23 +7,23 @@ namespace TermalDesign.App
     {
         public IDictionary<char, Segment> Segments = new Dictionary<char, Segment>(7);
 
-        public ModelCase(IList<int> genes, params (double T, int Q)[] inputs)
-        {;
-            Segments.Add('a', new SegmentSps((inputs[0].T, inputs[0].Q), genes[0]));
-            Segments.Add('b', new SegmentSps((inputs[1].T, inputs[1].Q), genes[1]));
-            Segments.Add('c', new SegmentSps(new[]
+        public ModelCase(IList<int> genes, bool bypassA = false, params(double T, int Q)[] inputs)
+        {
+            Segments.Add('a', new SegmentSps(genes[0], bypassA, (inputs[0].T, inputs[0].Q)));
+            Segments.Add('b', new SegmentSps(genes[1], inputs:(inputs[1].T, inputs[1].Q)));
+            Segments.Add('c', new SegmentSps(genes[2], inputs:new[]
             {
                 (Segments['a'].OutputTemperature, Segments['a'].Q),
                 (Segments['b'].OutputTemperature, Segments['b'].Q),
-            }, genes[2]));
-            Segments.Add('d', new Segment((Segments['c'].OutputTemperature, Segments['c'].Q), genes[3], Area(7400)));
-            Segments.Add('e', new SegmentSps((inputs[2].T, inputs[2].Q), genes[4]));
-            Segments.Add('f', new Segment(new[]
+            }));
+            Segments.Add('d', new Segment(genes[3], Area(7400), inputs:(Segments['c'].OutputTemperature, Segments['c'].Q)));
+            Segments.Add('e', new SegmentSps(genes[4], inputs:(inputs[2].T, inputs[2].Q)));
+            Segments.Add('f', new Segment(genes[5], Area(10000), inputs: new[]
             {
                 (Segments['d'].OutputTemperature, Segments['d'].Q),
                 (Segments['e'].OutputTemperature, Segments['e'].Q)
-            }, genes[5], Area(10000)));
-            Segments.Add('g', new Segment((Segments['f'].OutputTemperature, Segments['f'].Q), 7, Area(1600)));
+            }));
+            Segments.Add('g', new Segment(5, Area(1600), inputs:(Segments['f'].OutputTemperature, Segments['f'].Q)));
         }
 
         public double Failure()

@@ -4,16 +4,10 @@ namespace TermalDesign.App
 {
     public class SegmentSps : Segment
     {
-        public SegmentSps(IEnumerable<(double T, int Q)> inputs,
-            double u) : base(inputs, u, 2000.0)
+        public SegmentSps(double u, bool bypass = false, params(double T, int Q)[] inputs) 
+            : base(u, 2000.0, bypass, inputs)
         {
             
-        }
-
-        public SegmentSps((double T, int Q) inputs,
-            double u) : base(inputs, u, 2000.0)
-        {
-
         }
     }
 }

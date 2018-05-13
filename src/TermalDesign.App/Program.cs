@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GeneticSharp.Domain;
 using GeneticSharp.Domain.Populations;
@@ -15,24 +16,7 @@ namespace TermalDesign.App
             {
                 var genes = args.Select(a => int.Parse(a)).ToList();
 
-                var cases = new[]
-                {
-                    new ModelCase(genes, (0, 0), (0, 0), (121, 450)),
-                    new ModelCase(genes, (0, 0), (125, 350), (125, 110)),
-                    new ModelCase(genes, (0, 0), (135, 190), (135, 110)),
-                    new ModelCase(genes, (155, 400), (0, 0), (0, 0)),
-                    new ModelCase(genes, (0, 0), (132, 109), (132, 91)),
-                    new ModelCase(genes, (155, 150), (0, 0), (0, 0)),
-                    new ModelCase(genes, (0, 0), (132, 160), (136, 140)),
-                    new ModelCase(genes, (150, 130), (0, 0), (130, 78)),
-                    new ModelCase(genes, (0, 0), (127, 109), (130, 45)),
-                    new ModelCase(genes, (0, 0), (131, 150), (138, 50))
-                };
-
-                for (int i = 0; i < cases.Length; i++)
-                {
-                    Console.WriteLine($"Case {i + 1} - GOut {cases[i].Segments['g'].OutputTemperature:0} DIn {cases[i].Segments['d'].InputTemperature:0}");
-                }
+                OutputCases(genes);
 
                 return;
             }
@@ -55,6 +39,32 @@ namespace TermalDesign.App
             Console.WriteLine("Best solution found has {0} fitness.", gaBestChromosome.Fitness);
             Console.WriteLine("Values:");
             Console.WriteLine(string.Join(",", gaBestChromosome.Select(t => t.U.ToString())));
+
+            OutputCases(gaBestChromosome.Select(t => t.U).ToList());
+        }
+
+        private static void OutputCases(List<int> genes)
+        {
+            var cases = new[]
+            {
+                new ModelCase(genes, false, (0, 0), (0, 0), (121, 450)),
+                new ModelCase(genes, false, (0, 0), (125, 350), (125, 110)),
+                new ModelCase(genes, false, (0, 0), (135, 190), (135, 110)),
+                new ModelCase(genes, false, (155, 400), (0, 0), (0, 0)),
+                new ModelCase(genes, false, (0, 0), (132, 109), (132, 91)),
+                new ModelCase(genes, true, (155, 150), (0, 0), (0, 0)),
+                new ModelCase(genes, false, (0, 0), (132, 160), (136, 140)),
+                new ModelCase(genes, true, (150, 130), (0, 0), (130, 78)),
+                new ModelCase(genes, false, (0, 0), (127, 109), (130, 45)),
+                new ModelCase(genes, false, (0, 0), (131, 150), (138, 50))
+            };
+
+            for (int i = 0; i < cases.Length; i++)
+            {
+                var modelCase = cases[i];
+                Console.WriteLine(
+                    $"Case {i + 1} - GIn {modelCase.Segments['g'].InputTemperature:0} GOut {modelCase.Segments['g'].OutputTemperature:0} DIn {modelCase.Segments['d'].InputTemperature:0} FIn {modelCase.Segments['f'].InputTemperature:0}");
+            }
         }
     }
 }
