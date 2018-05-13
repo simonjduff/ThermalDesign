@@ -7,7 +7,7 @@ namespace TermalDesign.App
     {
         public IDictionary<char, Segment> Segments = new Dictionary<char, Segment>(7);
 
-        public ModelCase(IList<int> genes, bool bypassA = false, params(double T, int Q)[] inputs)
+        public ModelCase(IList<int> genes, bool bypassA = false, bool bypassE = false, params(double T, int Q)[] inputs)
         {
             Segments.Add('a', new SegmentSps(genes[0], bypassA, (inputs[0].T, inputs[0].Q)));
             Segments.Add('b', new SegmentSps(genes[1], inputs:(inputs[1].T, inputs[1].Q)));
@@ -17,7 +17,7 @@ namespace TermalDesign.App
                 (Segments['b'].OutputTemperature, Segments['b'].Q),
             }));
             Segments.Add('d', new Segment(genes[3], Area(7400), inputs:(Segments['c'].OutputTemperature, Segments['c'].Q)));
-            Segments.Add('e', new SegmentSps(genes[4], inputs:(inputs[2].T, inputs[2].Q)));
+            Segments.Add('e', new SegmentSps(genes[4], bypass: bypassE, inputs:(inputs[2].T, inputs[2].Q)));
             Segments.Add('f', new Segment(genes[5], Area(10000), inputs: new[]
             {
                 (Segments['d'].OutputTemperature, Segments['d'].Q),

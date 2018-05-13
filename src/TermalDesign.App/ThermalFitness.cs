@@ -24,25 +24,25 @@ namespace TermalDesign.App
             var cases = new[]
             {
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    false, (0, 0), (0, 0), (121, 450)), // 1
+                    false, false, (0, 0), (0, 0), (121, 450)), // 1
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    false, (0, 0), (125, 350), (125, 110)), // 2
+                    false, false, (0, 0), (125, 350), (125, 110)), // 2
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    false, (0, 0), (135, 190), (135, 110)), // 3
+                    false, false, (0, 0), (135, 190), (135, 110)), // 3
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    false, (155, 400), (0, 0), (0, 0)), // 4a
+                    false, false, (155, 400), (0, 0), (0, 0)), // 4a
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    false, (0, 0), (132, 109), (132, 91)), // 4b
+                    false, true, (0, 0), (132, 109), (132, 91)), // 4b
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    true, (155, 150), (0, 0), (0, 0)),// 5a
+                    true, false, (155, 150), (0, 0), (0, 0)),// 5a
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    false, (0, 0), (132, 160), (136, 140)), // 5b
+                    false, false, (0, 0), (132, 160), (136, 140)), // 5b
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    true, (150, 130), (0, 0), (130, 78)), // 6a
+                    true, true, (150, 130), (0, 0), (130, 78)), // 6a
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    false, (0, 0), (127, 109), (130, 45)), // 6b
+                    false, true, (0, 0), (127, 109), (130, 45)), // 6b
                 new ModelCase(genes.Select(g => g.U).ToList(),
-                    false, (0, 0), (131, 150), (138, 50)) // 7
+                    false, true, (0, 0), (131, 150), (138, 50)) // 7
             };
 
             var failure = cases.Sum(c => c.Failure());

@@ -47,16 +47,16 @@ namespace TermalDesign.App
         {
             var cases = new[]
             {
-                new ModelCase(genes, false, (0, 0), (0, 0), (121, 450)),
-                new ModelCase(genes, false, (0, 0), (125, 350), (125, 110)),
-                new ModelCase(genes, false, (0, 0), (135, 190), (135, 110)),
-                new ModelCase(genes, false, (155, 400), (0, 0), (0, 0)),
-                new ModelCase(genes, false, (0, 0), (132, 109), (132, 91)),
-                new ModelCase(genes, true, (155, 150), (0, 0), (0, 0)),
-                new ModelCase(genes, false, (0, 0), (132, 160), (136, 140)),
-                new ModelCase(genes, true, (150, 130), (0, 0), (130, 78)),
-                new ModelCase(genes, false, (0, 0), (127, 109), (130, 45)),
-                new ModelCase(genes, false, (0, 0), (131, 150), (138, 50))
+                new ModelCase(genes, false, false, (0, 0), (0, 0), (121, 450)),
+                new ModelCase(genes, false, false, (0, 0), (125, 350), (125, 110)),
+                new ModelCase(genes, false, false, (0, 0), (135, 190), (135, 110)),
+                new ModelCase(genes, false, false, (155, 400), (0, 0), (0, 0)),
+                new ModelCase(genes, false, true, (0, 0), (132, 109), (132, 91)),
+                new ModelCase(genes, true,  false, (155, 150), (0, 0), (0, 0)),
+                new ModelCase(genes, false, false, (0, 0), (132, 160), (136, 140)),
+                new ModelCase(genes, true, true, (150, 130), (0, 0), (130, 78)),
+                new ModelCase(genes, false, true, (0, 0), (127, 109), (130, 45)),
+                new ModelCase(genes, false, true, (0, 0), (131, 150), (138, 50))
             };
 
             for (int i = 0; i < cases.Length; i++)
