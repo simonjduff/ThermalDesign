@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
+using ThermalDesign.App.Extensions;
 using ThermalDesign.App.Segments;
 
 namespace ThermalDesign.App
 {
     public class ModelCase
     {
-        public IDictionary<char, Segment> Segments = new Dictionary<char, Segment>(7);
+        public IDictionary<string, Segment> Segments = new Dictionary<string, Segment>(7);
 
         public static Func<string,double> UFetcher(IList<int> genes)
         {
@@ -37,37 +37,56 @@ namespace ThermalDesign.App
             };
         }
 
-        public ModelCase(bool bypassA = false, bool bypassE = false, params(double T, int Q)[] inputs)
+        public ModelCase(string[] bypasses, params(double T, int Q)[] inputs)
         {
-            Segments.Add('a', Bypass(bypassA, () => 
-                new SegmentSps("a", uFunc => (inputs[0].T, inputs[0].Q)), "a", uFunc => (inputs[0].T, inputs[0].Q)));
-            
-            Segments.Add('b', new SegmentSps("b", uFunc => (inputs[1].T, inputs[1].Q)));
-            Segments.Add('c', new SegmentSps("c", 
-                uFunc => Segments['a'].Output(uFunc).TQ,
-                uFunc => Segments['b'].Output(uFunc).TQ
-            ));
-            Segments.Add('d', new Segment("d", Area(7400), uFunc => Segments['c'].Output(uFunc).TQ));
-            Segments.Add('e', Bypass(bypassE, () => 
-                new SegmentSps("e", uFunc => (inputs[2].T, inputs[2].Q)), "e", uFunc => (inputs[2].T, inputs[2].Q)));
-            Segments.Add('f', new Segment("f", Area(10000),
-                uFunc => (Segments['d'].Output(uFunc).TQ),
-                uFunc => (Segments['e'].Output(uFunc).TQ)
-            ));
-            Segments.Add('g', new Segment("g", Area(1600), uFunc => Segments['f'].Output(uFunc).TQ));
+            Segment SegmentFunc(string id, double area, Func<Func<string, double>, (double T, int Q)>[] i) => new Segment(id, area, i);
+            Segment SegmentSpsFunc(string id, double area, Func<Func<string, double>, (double T, int Q)>[] i) => new SegmentSps(id, i);
+
+            BuildSegment(bypasses,
+                "a", 0,
+                SegmentSpsFunc, 
+                uFunc => (inputs[0].T, inputs[0].Q));
+
+            BuildSegment(bypasses,
+                "b", 0,
+                SegmentSpsFunc,
+                uFunc => (inputs[1].T, inputs[1].Q));
+
+            BuildSegment(bypasses, 
+                "c", 0,
+                SegmentSpsFunc,
+                uFunc => Segments["a"].Output(uFunc).TQ,
+                uFunc => Segments["b"].Output(uFunc).TQ);
+
+            BuildSegment(bypasses,
+                "d", Area(7400),
+                SegmentFunc, 
+                uFunc => Segments["c"].Output(uFunc).TQ);
+
+            BuildSegment(bypasses,
+                "e", 0,
+                SegmentSpsFunc, 
+                uFunc => (inputs[2].T, inputs[2].Q));
+
+            BuildSegment(bypasses,
+                "f", Area(10000),
+                SegmentFunc,
+                uFunc => Segments["d"].Output(uFunc).TQ,
+                uFunc => Segments["e"].Output(uFunc).TQ);
+
+            BuildSegment(bypasses,
+                "g", Area(1600),
+                SegmentFunc,
+                uFunc => Segments["f"].Output(uFunc).TQ);
         }
 
-        private Segment Bypass(bool bypass, 
-            Func<Segment> constructor, 
-            string id, 
+        private void BuildSegment(string[] bypasses,
+            string id,
+            double area,
+            Func<string, double, Func<Func<string, double>, (double T, int Q)>[], Segment> constructor, 
             params Func<Func<string, double>, (double T, int Q)>[] inputs)
         {
-            if (!bypass)
-            {
-                return constructor();
-            }
-
-            return new SegmentBypass(id, inputs);
+            Segments.Add(id, !bypasses.ContainsSafe(id) ? constructor(id, area, inputs) : new SegmentBypass(id, inputs));
         }
 
         public IDictionary<string, SegmentOutput> Run(int[] genes)
