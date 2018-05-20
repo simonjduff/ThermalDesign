@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Crossovers;
 
-namespace TermalDesign.App
+namespace ThermalDesign.App
 {
     public class IntegerCrossover : ICrossover
     {

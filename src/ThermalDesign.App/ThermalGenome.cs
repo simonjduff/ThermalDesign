@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Randomizations;
 
-namespace TermalDesign.App
+namespace ThermalDesign.App
 {
     public class ThermalGenome : ChromosomeBase, IEnumerable<(int U, (int Min, int Max) Bounds)>
     {
-        private const int NumberOfNodes = 6;
-        public readonly (int Min, int Max)[] Bounds = {(1, 100), (1, 50), (1, 50), (3, 10), (1, 50), (3, 10)};
+        private int NumberOfNodes => Bounds.Length;
+        public (int Min, int Max)[] Bounds { get; }
 
-        public ThermalGenome() : base(NumberOfNodes)
+        public ThermalGenome(params (int min, int max)[] bounds) : base(bounds.Length)
         {
+            Bounds = bounds;
             CreateGenes();
         }
 
@@ -36,7 +37,7 @@ namespace TermalDesign.App
 
         public override IChromosome CreateNew()
         {
-            return new ThermalGenome();
+            return new ThermalGenome(Bounds);
         }
 
         public IEnumerator<(int U, (int Min, int Max) Bounds)> GetEnumerator()
