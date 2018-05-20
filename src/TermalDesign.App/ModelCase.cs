@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using TermalDesign.App.Segments;
 
 namespace TermalDesign.App
 {
@@ -7,41 +10,87 @@ namespace TermalDesign.App
     {
         public IDictionary<char, Segment> Segments = new Dictionary<char, Segment>(7);
 
-        public ModelCase(IList<int> genes, bool bypassA = false, bool bypassE = false, params(double T, int Q)[] inputs)
+        public static Func<string,double> UFetcher(IList<int> genes)
         {
-            Segments.Add('a', new SegmentSps(genes[0], bypassA, (inputs[0].T, inputs[0].Q)));
-            Segments.Add('b', new SegmentSps(genes[1], inputs:(inputs[1].T, inputs[1].Q)));
-            Segments.Add('c', new SegmentSps(genes[2], inputs:new[]
+            return id =>
             {
-                (Segments['a'].OutputTemperature, Segments['a'].Q),
-                (Segments['b'].OutputTemperature, Segments['b'].Q),
-            }));
-            Segments.Add('d', new Segment(genes[3], Area(7400), inputs:(Segments['c'].OutputTemperature, Segments['c'].Q)));
-            Segments.Add('e', new SegmentSps(genes[4], bypass: bypassE, inputs:(inputs[2].T, inputs[2].Q)));
-            Segments.Add('f', new Segment(genes[5], Area(10000), inputs: new[]
-            {
-                (Segments['d'].OutputTemperature, Segments['d'].Q),
-                (Segments['e'].OutputTemperature, Segments['e'].Q)
-            }));
-            Segments.Add('g', new Segment(5, Area(1600), inputs:(Segments['f'].OutputTemperature, Segments['f'].Q)));
+
+                switch (id)
+                {
+                    case "a":
+                        return genes[0];
+                    case "b":
+                        return genes[1];
+                    case "c":
+                        return genes[2];
+                    case "d":
+                        return genes[3];
+                    case "e":
+                        return genes[4];
+                    case "f":
+                        return genes[5];
+                    case "g":
+                        return 5;
+                    default:
+                        throw new Exception($"Unknown gene id {id}");
+                }
+            };
         }
 
-        public double Failure()
+        public ModelCase(bool bypassA = false, bool bypassE = false, params(double T, int Q)[] inputs)
+        {
+            Segments.Add('a', Bypass(bypassA, () => 
+                new SegmentSps("a", uFunc => (inputs[0].T, inputs[0].Q)), "a", uFunc => (inputs[0].T, inputs[0].Q)));
+            
+            Segments.Add('b', new SegmentSps("b", uFunc => (inputs[1].T, inputs[1].Q)));
+            Segments.Add('c', new SegmentSps("c", 
+                uFunc => Segments['a'].Output(uFunc).TQ,
+                uFunc => Segments['b'].Output(uFunc).TQ
+            ));
+            Segments.Add('d', new Segment("d", Area(7400), uFunc => Segments['c'].Output(uFunc).TQ));
+            Segments.Add('e', Bypass(bypassE, () => 
+                new SegmentSps("e", uFunc => (inputs[2].T, inputs[2].Q)), "e", uFunc => (inputs[2].T, inputs[2].Q)));
+            Segments.Add('f', new Segment("f", Area(10000),
+                uFunc => (Segments['d'].Output(uFunc).TQ),
+                uFunc => (Segments['e'].Output(uFunc).TQ)
+            ));
+            Segments.Add('g', new Segment("g", Area(1600), uFunc => Segments['f'].Output(uFunc).TQ));
+        }
+
+        private Segment Bypass(bool bypass, 
+            Func<Segment> constructor, 
+            string id, 
+            params Func<Func<string, double>, (double T, int Q)>[] inputs)
+        {
+            if (!bypass)
+            {
+                return constructor();
+            }
+
+            return new SegmentBypass(id, inputs);
+        }
+
+        public IDictionary<string, SegmentOutput> Run(int[] genes)
+        {
+            return Segments.Values.Select(s => s.Output(UFetcher(genes))).ToDictionary(i => i.Id);
+        }
+
+        public static double Failure(IDictionary<string, SegmentOutput> segments)
         {
             double failure = 0;
-            if (Segments['d'].InputTemperature > 140)
+            if (segments["d"].InputTemperature > 140)
             {
-                failure += Segments['d'].InputTemperature - 140;
+                failure += segments["d"].InputTemperature - 140;
             }
 
-            if (Segments['f'].InputTemperature > 140)
+            if (segments["f"].InputTemperature > 140)
             {
-                failure += Segments['f'].InputTemperature - 140;
+                failure += segments["f"].InputTemperature - 140;
             }
 
-            if (Segments['g'].OutputTemperature > 90)
+            if (segments["g"].T > 90)
             {
-                failure += Segments['g'].OutputTemperature - 90;
+                failure += segments["g"].T - 90;
             }
 
             return failure * -1;

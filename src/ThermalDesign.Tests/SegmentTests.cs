@@ -1,5 +1,5 @@
 using System;
-using TermalDesign.App;
+using TermalDesign.App.Segments;
 using Xunit;
 
 namespace ThermalDesign.Tests
@@ -11,25 +11,26 @@ namespace ThermalDesign.Tests
         [Fact]
         public void SPSMid()
         {
-            var segment = new SegmentSps(5, inputs: new[] {(149.7, 200), (132.8, 250)});
+            var segment = new SegmentSps("id", a => (149.7, 200), a => (132.8, 250));
 
-            Assert.True(Math.Abs(136.3 - segment.OutputTemperature) < RoundingValue);
+            Assert.True(Math.Abs(136.3 - segment.Output(i => 5).T) < RoundingValue);
         }
 
         [Fact]
         public void SPSIn()
         {
-            var segment = new SegmentSps(5, inputs:new[] { (160.0, 200)});
-
-            Assert.True(Math.Abs(149.7 - segment.OutputTemperature) < RoundingValue);
+            var segment = new SegmentSps("id", a => (160.0, 200));
+        
+            Assert.True(Math.Abs(149.7 - segment.Output(i => 5).T) < RoundingValue);
         }
 
         [Fact]
         public void URF()
         {
-            var segment = new Segment(5, 0.359 * Math.PI * 10000, inputs:new[] { (120.8, 450), (135.5, 400) });
+            var segment = new Segment("id", 0.359 * Math.PI * 10000, a => (120.8, 450), a => (135.5, 400) );
 
-            Assert.True(Math.Abs(117.3 - segment.OutputTemperature) < RoundingValue, $"Diff {117.3 - segment.OutputTemperature}");
+            var outputTemperature = segment.Output(i => 5).T;
+            Assert.True(Math.Abs(117.3 - outputTemperature) < RoundingValue, $"Diff {117.3 - outputTemperature}");
         }
     }
 }

@@ -16,7 +16,7 @@ namespace TermalDesign.App
             {
                 var genes = args.Select(a => int.Parse(a)).ToList();
 
-                OutputCases(genes);
+                //OutputCases(genes);
 
                 return;
             }
@@ -40,31 +40,31 @@ namespace TermalDesign.App
             Console.WriteLine("Values:");
             Console.WriteLine(string.Join(",", gaBestChromosome.Select(t => t.U.ToString())));
 
-            OutputCases(gaBestChromosome.Select(t => t.U).ToList());
+            //OutputCases(gaBestChromosome.Select(t => t.U).ToList());
         }
 
-        private static void OutputCases(List<int> genes)
-        {
-            var cases = new[]
-            {
-                new ModelCase(genes, false, false, (0, 0), (0, 0), (121, 450)),
-                new ModelCase(genes, false, false, (0, 0), (125, 350), (125, 110)),
-                new ModelCase(genes, false, false, (0, 0), (135, 190), (135, 110)),
-                new ModelCase(genes, false, false, (155, 400), (0, 0), (0, 0)),
-                new ModelCase(genes, false, true, (0, 0), (132, 109), (132, 91)),
-                new ModelCase(genes, true,  false, (155, 150), (0, 0), (0, 0)),
-                new ModelCase(genes, false, false, (0, 0), (132, 160), (136, 140)),
-                new ModelCase(genes, true, true, (150, 130), (0, 0), (130, 78)),
-                new ModelCase(genes, false, true, (0, 0), (127, 109), (130, 45)),
-                new ModelCase(genes, false, true, (0, 0), (131, 150), (138, 50))
-            };
+        //private static void OutputCases(List<int> genes)
+        //{
+        //    var cases = new[]
+        //    {
+        //        new ModelCase(genes, false, false, (0, 0), (0, 0), (121, 450)),
+        //        new ModelCase(genes, false, false, (0, 0), (125, 350), (125, 110)),
+        //        new ModelCase(genes, false, false, (0, 0), (135, 190), (135, 110)),
+        //        new ModelCase(genes, false, false, (155, 400), (0, 0), (0, 0)),
+        //        new ModelCase(genes, false, true, (0, 0), (132, 109), (132, 91)),
+        //        new ModelCase(genes, true,  false, (155, 150), (0, 0), (0, 0)),
+        //        new ModelCase(genes, false, false, (0, 0), (132, 160), (136, 140)),
+        //        new ModelCase(genes, true, true, (150, 130), (0, 0), (130, 78)),
+        //        new ModelCase(genes, false, true, (0, 0), (127, 109), (130, 45)),
+        //        new ModelCase(genes, false, true, (0, 0), (131, 150), (138, 50))
+        //    };
 
-            for (int i = 0; i < cases.Length; i++)
-            {
-                var modelCase = cases[i];
-                Console.WriteLine(
-                    $"Case {i + 1} - GIn {modelCase.Segments['g'].InputTemperature:0} GOut {modelCase.Segments['g'].OutputTemperature:0} DIn {modelCase.Segments['d'].InputTemperature:0} FIn {modelCase.Segments['f'].InputTemperature:0}");
-            }
-        }
+        //    for (int i = 0; i < cases.Length; i++)
+        //    {
+        //        var modelCase = cases[i];
+        //        Console.WriteLine(
+        //            $"Case {i + 1} - GIn {modelCase.Segments['g'].CalculateInputTemperature():0} GOut {modelCase.Segments['g'].OutputTemperature:0} DIn {modelCase.Segments['d'].CalculateInputTemperature():0} FIn {modelCase.Segments['f'].CalculateInputTemperature():0}");
+        //    }
+        //}
     }
 }
