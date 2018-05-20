@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Fitnesses;
 using ThermalDesign.App.Models;
@@ -33,14 +34,16 @@ namespace ThermalDesign.App
             
 
             var caseOutputs = _model.Cases.Select(c => c.Run(uValues)).ToList();
-            var failure = caseOutputs.Sum(c => ModelCase.Failure(c));
+            var failure = caseOutputs.Sum(c => _model.Failure(c));
             if (failure < 0)
             {
                 return failure;
             }
 
-            var outputDiff = caseOutputs.Min(c => c["g"].T);
-            return outputDiff;
+            var lastKey = caseOutputs.SelectMany(c => c.Keys).Max().First().ToString();
+
+            var outputDiff = caseOutputs.Min(c => c[lastKey].T);
+            return outputDiff;// Math.Abs(Math.Abs(46 - outputDiff) * -1);
         }
     }
 }

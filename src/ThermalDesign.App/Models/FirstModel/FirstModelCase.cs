@@ -4,11 +4,11 @@ using System.Linq;
 using ThermalDesign.App.Extensions;
 using ThermalDesign.App.Segments;
 
-namespace ThermalDesign.App
+namespace ThermalDesign.App.Models.FirstModel
 {
-    public class ModelCase
+    public class FirstModelCase : IModelCase
     {
-        public IDictionary<string, Segment> Segments = new Dictionary<string, Segment>(7);
+        public IDictionary<string, Segment> Segments { get; } = new Dictionary<string, Segment>(7);
 
         public static Func<string,double> UFetcher(IList<int> genes)
         {
@@ -37,7 +37,7 @@ namespace ThermalDesign.App
             };
         }
 
-        public ModelCase(string[] bypasses, params(double T, int Q)[] inputs)
+        public FirstModelCase(string[] bypasses, params(double T, int Q)[] inputs)
         {
             Segment SegmentFunc(string id, double area, Func<Func<string, double>, (double T, int Q)>[] i) => new Segment(id, area, i);
             Segment SegmentSpsFunc(string id, double area, Func<Func<string, double>, (double T, int Q)>[] i) => new SegmentSps(id, i);
@@ -91,28 +91,8 @@ namespace ThermalDesign.App
 
         public IDictionary<string, SegmentOutput> Run(int[] genes)
         {
-            return Segments.Values.Select(s => s.Output(UFetcher(genes))).ToDictionary(i => i.Id);
-        }
-
-        public static double Failure(IDictionary<string, SegmentOutput> segments)
-        {
-            double failure = 0;
-            if (segments["d"].InputTemperature > 140)
-            {
-                failure += segments["d"].InputTemperature - 140;
-            }
-
-            if (segments["f"].InputTemperature > 140)
-            {
-                failure += segments["f"].InputTemperature - 140;
-            }
-
-            if (segments["g"].T > 90)
-            {
-                failure += segments["g"].T - 90;
-            }
-
-            return failure * -1;
+            var finalGenes = genes.Concat(new[] {6}).ToArray();
+            return Segments.Values.Select(s => s.Output(UFetcher(finalGenes))).ToDictionary(i => i.Id);
         }
 
         private double Area(int length)
