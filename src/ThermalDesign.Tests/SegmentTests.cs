@@ -1,5 +1,5 @@
 using System;
-using TermalDesign.App.Segments;
+using ThermalDesign.App.Segments;
 using Xunit;
 
 namespace ThermalDesign.Tests

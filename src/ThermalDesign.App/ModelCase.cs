@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
-using TermalDesign.App.Segments;
+using ThermalDesign.App.Segments;
 
-namespace TermalDesign.App
+namespace ThermalDesign.App
 {
     public class ModelCase
     {

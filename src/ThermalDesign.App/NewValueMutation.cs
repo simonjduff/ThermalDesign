@@ -3,7 +3,7 @@ using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Mutations;
 using GeneticSharp.Domain.Randomizations;
 
-namespace TermalDesign.App
+namespace ThermalDesign.App
 {
     public class NewValueMutation : MutationBase
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Randomizations;
 
-namespace TermalDesign.App
+namespace ThermalDesign.App
 {
     public class ThermalGenome : ChromosomeBase, IEnumerable<(int U, (int Min, int Max) Bounds)>
     {

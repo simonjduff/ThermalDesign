@@ -1,7 +1,7 @@
 ﻿using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Mutations;
 
-namespace TermalDesign.App
+namespace ThermalDesign.App
 {
     public class NullMutation : IMutation
     {

@@ -6,7 +6,7 @@ using GeneticSharp.Domain.Populations;
 using GeneticSharp.Domain.Selections;
 using GeneticSharp.Domain.Terminations;
 
-namespace TermalDesign.App
+namespace ThermalDesign.App
 {
     class Program
     {

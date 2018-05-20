@@ -2,7 +2,7 @@
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Fitnesses;
 
-namespace TermalDesign.App
+namespace ThermalDesign.App
 {
     public class ThermalFitness : IFitness
     {

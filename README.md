@@ -5,7 +5,7 @@ Install [dotnet core](https://www.microsoft.com/net/learn/get-started/windows)
 Run the following commands:
 1. dotnet restore
 2. dotnet build
-3. dotnet run --project src\TermalDesign.App\TermalDesign.App.csproj
+3. dotnet run --project src\ThermalDesign.App\ThermalDesign.App.csproj
 
 ## Input needed
 ### Fitness Function

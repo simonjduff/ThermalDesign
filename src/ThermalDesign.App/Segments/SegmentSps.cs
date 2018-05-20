@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TermalDesign.App.Segments
+namespace ThermalDesign.App.Segments
 {
     public class SegmentSps : Segment
     {

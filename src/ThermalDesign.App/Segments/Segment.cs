@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TermalDesign.App.Segments
+namespace ThermalDesign.App.Segments
 {
     public class Segment
     {
